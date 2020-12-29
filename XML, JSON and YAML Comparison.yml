@@ -1,0 +1,29 @@
+# XML, JSON and YAML Comparison
+# Created by prigleao@gmail.com
+
+#XML
+<interfaces xmlns:="[...]yang:ieft-interfaces">
+<interface>
+
+<name>eth0</name>
+<description>Configured by NETCONF</description>
+</interface>
+</interfaces>
+
+#JSON
+
+{
+	"ietf-interfaces:interfaces" : {
+		{
+			"name" : "eth0",
+			"description": "Configured by NETCONF"
+		}
+	}
+}
+
+#YAML
+
+ietf-interfaces:interfaces:interfaces:
+	interface:
+		name: eth0
+		description: Configured by NETCONF
