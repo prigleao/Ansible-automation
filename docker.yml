@@ -1,0 +1,41 @@
+---
+- hosts: docker
+  become: yes
+  tasks:
+    - name: 'Adiciona repositório do Docker'
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+
+    - name: 'Instala os pacotes do Docker e o pacote epel-release'
+      yum:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+        - epel-release
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: 'Instala o pacote python2-pip'
+      yum:
+        name: python2-pip
+        state: latest
+
+    - name: 'Upgrade do pip'
+      shell: pip install --upgrade pip
+      
+    - name: 'Instala o Docker Compose'
+      pip:
+        name: docker-compose
+        state: latest
+
+    - name: 'Inicia o serviço do Docker'
+      service:
+        name: docker
+        state: started
+
+    - name: 'Criando uma rede no Docker'
+      docker_network:
+        name: cluster_network
